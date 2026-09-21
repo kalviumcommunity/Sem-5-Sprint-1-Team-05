@@ -143,6 +143,7 @@ docker run -p 8501:8501 ride-sharing-ops:latest
 ## Documentation
 
 - [Product Requirements Document](docs/product_requirements.md)
+- [UX Submission](docs/ux_submission.md)
 - [Architecture](docs/architecture.md)
 - [Analytical Methodology](docs/analytical_methodology.md)
 - [Data Dictionary](docs/data_dictionary.md)
