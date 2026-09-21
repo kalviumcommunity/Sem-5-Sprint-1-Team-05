@@ -4,7 +4,6 @@ Simulates realistic operational event logs across multiple metro markets with
 varying supply-demand elasticities, rush hours, surge dynamics, and driver/rider behaviors.
 """
 
-import uuid
 from datetime import datetime, timedelta, timezone
 
 import numpy as np
@@ -112,6 +111,7 @@ def generate_operational_dataset(
     """Generates deterministic synthetic ride-sharing event log DataFrame."""
     np.random.seed(random_seed)
     records = []
+    request_number = 0
 
     logger.info(
         f"Generating operational dataset for {len(CITY_PROFILES)} cities over {days} days..."
@@ -194,7 +194,7 @@ def generate_operational_dataset(
 
                     records.append(
                         {
-                            "request_id": f"REQ-{uuid.uuid4().hex[:12].upper()}",
+                            "request_id": f"REQ-{request_number:012d}",
                             "city": city,
                             "timestamp": req_ts.strftime("%Y-%m-%d %H:%M:%S"),
                             "driver_id": f"DRV-{np.random.randint(1000, 9999)}",
@@ -211,6 +211,7 @@ def generate_operational_dataset(
                             "trip_distance_km": float(round(np.random.uniform(2.0, 28.0), 2)),
                         }
                     )
+                    request_number += 1
 
     df = pd.DataFrame(records)
     logger.info(f"Dataset generated successfully with {len(df):,} records.")
