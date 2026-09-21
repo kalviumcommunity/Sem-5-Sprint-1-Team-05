@@ -1,0 +1,41 @@
+name: CI / Data Pipeline & Quality Gates
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .[dev]
+
+      - name: Run Schema & Data Quality Tests
+        run: |
+          pytest tests/data_quality/ -v
+
+      - name: Run Unit Tests
+        run: |
+          pytest tests/unit/ -v
+
+      - name: Run Integration Tests
+        run: |
+          pytest tests/integration/ -v
+
+      - name: Run Analytical Performance Smoke Tests
+        run: |
+          pytest tests/performance/ -v
