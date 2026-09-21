@@ -1,0 +1,16 @@
+.git
+.github
+.pytest_cache
+.ruff_cache
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.venv
+venv
+env
+tests
+data/raw/*.csv
+*.duckdb.wal
+.env
+.env.local
